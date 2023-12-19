@@ -6,7 +6,7 @@ import torch.nn.functional as F
 class QaBERT(BertPreTrainedModel):
     def __init__(self, config):
         super(QaBERT, self).__init__(config)
-        self.device = config.device
+        self._device = config.device
         self.label_count = config.num_labels
 
         self.bert = BertModel(config)
@@ -20,6 +20,7 @@ class QaBERT(BertPreTrainedModel):
         self.class_weights = config.weight_class
 
         self.init_weights()
+
 
     def calculate(self, input_ids, attention_mask=None, token_type_ids=None):
         bert_outputs = self.bert(input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
@@ -58,7 +59,7 @@ class QaBERT(BertPreTrainedModel):
         else:
             logits = self.output_layer_cat(final_output)
 
-        class_weights = torch.FloatTensor(self.class_weights).to(self.device)
+        class_weights = torch.FloatTensor(self.class_weights).to(self._device)
         loss = F.cross_entropy(logits, target, weight=class_weights)
 
         predicted_value = torch.max(logits, 1)[1]
