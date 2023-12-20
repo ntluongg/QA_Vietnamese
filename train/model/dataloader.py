@@ -52,7 +52,7 @@ class InputFeatures(object):
 
 
 def read_squad_example_from_file(input_data, is_training=True):
-    with open(input_data, "r") as rf:
+    with open(input_data, "r", encoding="utf8") as rf:
         examples = []
         for e_line in rf.readlines():
             e_line = e_line.replace("\n", "")

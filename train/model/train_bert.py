@@ -91,7 +91,7 @@ def train_squad(args, tokenizer, model):
                       'label': batch[3]
                       }
 
-            loss, l_predict, l_target = model.loss(inputs['input_ids'],
+            loss, l_predict, l_target = model.compute_loss(inputs['input_ids'],
                                                    inputs['attention_mask'],
                                                    inputs['token_type_ids'],
                                                    inputs['label'])
@@ -175,10 +175,10 @@ def train_squad(args, tokenizer, model):
 def evaluate(args, model, tokenizer, is_test=True):
     if is_test:
         path_input_data = args.path_input_test_data
-        path_input_data_pt = args.path_input_test_pt
+        path_input_data_pt = args.path_pt_test_dataset
     else:
         path_input_data = args.path_input_validation_data
-        path_input_data_pt = args.path_input_validation_pt
+        path_input_data_pt = args.path_pt_validation_dataset
 
     if not args.load_data_from_pt:
         eval_dataset, eval_dataloader = load_squad_to_torch_dataset(path_input_data,
@@ -211,7 +211,7 @@ def evaluate(args, model, tokenizer, is_test=True):
                       'label': batch[3]
                       }
 
-            loss, l_predict, l_target = model.loss(inputs['input_ids'],
+            loss, l_predict, l_target = model.compute_loss(inputs['input_ids'],
                                     inputs['attention_mask'],
                                     inputs['token_type_ids'],
                                     inputs['label'])
