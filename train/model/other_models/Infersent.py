@@ -4,7 +4,7 @@ import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import lstm_cnn_encoder
+import train.model.other_models.lstm_cnn_encoder
 
 
 def xavier_uniform_init(m):

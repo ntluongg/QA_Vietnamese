@@ -4,8 +4,8 @@ import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from components.cnn_extract import CNNFeatureExtract1D, CNNFeatureExtract2D
-from components.high_way import Highway
+from train.model.other_models.components.cnn_extract import CNNFeatureExtract1D, CNNFeatureExtract2D
+from train.model.other_models.components.high_way import Highway
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 

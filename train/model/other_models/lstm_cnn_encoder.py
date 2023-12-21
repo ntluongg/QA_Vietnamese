@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from components.cnn_extract import CNNFeatureExtract1D
-from components.high_way import Highway
+from train.model.other_models.components.cnn_extract import CNNFeatureExtract1D
+from train.model.other_models.components.high_way import Highway
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 class LSTMWordCnnCharEncoder(nn.Module):

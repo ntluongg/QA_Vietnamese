@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import os
 import json
-import lstm_cnn_encoder
-from components.cnn_extract import CNNFeatureExtract1D
+import train.model.other_models.lstm_cnn_encoder
+from train.model.other_models.components.cnn_extract import CNNFeatureExtract1D
 
 def xavier_uniform_init(m):
     """
