@@ -8,6 +8,7 @@ import os
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 from sklearn.metrics import f1_score, accuracy_score
+import wandb
 
 
 def set_seed(args):
@@ -146,11 +147,20 @@ def train_squad(args, tokenizer, model):
                     if args.path_input_validation_data is not None:
                         w_log_file.write("Start evaluating validation data !!\n")
                         output_validation = evaluate(args, model, tokenizer, is_test=False)
-                        line_log_val = "test result - loss: {}, acc: {}, f1: {}\n".format(output_validation['loss'],
+                        line_log_val = "val result - loss: {}, acc: {}, f1: {}\n".format(output_validation['loss'],
                                                                                           output_validation['accuracy'],
                                                                                           output_validation['f1'])
                         print(line_log_val)
                         w_log_file.write(line_log_val)
+                        wandb.log({
+                            'Val_loss': output_validation['loss'],
+                            'Train_loss': output_train['loss'],
+                            'Val_f1': output_validation['f1'],
+                            'Train_f1': output_train['f1'],
+                            'Val_acc': output_validation['accuracy'],
+                            'Train_acc': output_train['accuracy'],
+                            'Scheduler': optimizer.param_groups[-1]['lr']
+                        })
                     line_end_logging = "end for logging current step {} !!!".format(global_step)
                     print(line_end_logging)
 

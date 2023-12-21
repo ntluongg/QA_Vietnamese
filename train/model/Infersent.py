@@ -4,7 +4,7 @@ import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from components import LSTMWordCnnCharEncoder
+import lstm_cnn_encoder
 
 
 def xavier_uniform_init(m):
