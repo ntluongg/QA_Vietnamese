@@ -1,5 +1,5 @@
 import torch
-from dataloader import load_squad_to_torch_dataset
+from QA_Vietnamese.train.model.bert.dataloader import load_squad_to_torch_dataset
 from transformers import AdamW, get_linear_schedule_with_warmup
 from tqdm import tqdm_notebook as tqdm
 import random
