@@ -1,7 +1,7 @@
 # User instruction
 ## Some note:
-First you need to use Kaggle notebook with GPU T4 x2 enabled because this model is "data-parallel"ed.
-And you also need to add the BKAI-IGH NeoPolyp dataset to your kaggle notebook (https://www.kaggle.com/competitions/bkai-igh-neopolyp/overview).
+First you need to use Kaggle notebook with GPU enabled.
+And you also need to add our custom dataset https://www.kaggle.com/datasets/imnotluong/squadv2.
 ## guide:
 ```python
 !pip install gdown
