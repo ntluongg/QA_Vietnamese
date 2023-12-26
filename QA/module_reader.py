@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,TensorDataset)
 from transformers import BertPreTrainedModel, BertModel
 from transformers import AutoTokenizer,AdamW,BertForQuestionAnswering
-from module_utils import *
+from QA_Vietnamese.QA.module_utils import *
 from multiprocessing import Process, Pool
 import logging
+import sys
 
 class Args:
     bert_model = './resources'
