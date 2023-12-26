@@ -16,7 +16,7 @@ def loadMap(file_name):
         
     return map_
         
-el_vi = loadMap('resources/lower_vi_syns.txt')   
+el_vi = loadMap('/kaggle/input/ggsearch/lower_vi_syns.txt')   
 el_map_variants = {}
 r_vi = {}
 

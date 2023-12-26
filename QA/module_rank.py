@@ -11,9 +11,9 @@ import logging
 import timeout_decorator
 from bs4 import BeautifulSoup,SoupStrainer
 import pickle
-from module_synonym import generateVariants
+from QA_Vietnamese.QA.module_synonym import generateVariants
 from underthesea import pos_tag, ner, word_tokenize
-from module_link import extractEntVariants
+from QA_Vietnamese.QA.module_link import extractEntVariants
 
 #w2v = KeyedVectors.load('resources/word2vec-200')
 

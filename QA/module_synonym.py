@@ -2,11 +2,11 @@ from underthesea import pos_tag
 import string
 import functools
 
-stopwords = open('resources/stopwords_small.txt').read().split('\n')
+stopwords = open('/kaggle/input/ggsearch/stopwords_small.txt').read().split('\n')
 stopwords = set([w.replace(' ','_') for w in stopwords])
 punct_set = set([c for c in string.punctuation]) | set(['“','”',"...","–","…","..","•",'“','”'])
 
-with open('resources/bigram.txt') as f:
+with open('/kaggle/input/ggsearch/bigram.txt') as f:
     data = f.read().split('\n')
 
 data = data[:-1]
@@ -43,7 +43,7 @@ import json,itertools
 map_pos = {'M':'noun', 'Y':'noun','Nb':'noun','Nc':'noun','Ni':'noun','Np':'noun','N':'noun','X':'adj',
            'Nu':'noun','Ny':'noun','V':'verb', 'Vb':'verb','Vy':'verb','A': 'adj','Ab': 'adj','R':'adj'}
 
-map_synonym = json.load(open('resources/synonym.json'))
+map_synonym = json.load(open('/kaggle/input/ggsearch/synonym.json'))
 
 def generateCombinations(tokens,thresh_hold):
     combinations = []
