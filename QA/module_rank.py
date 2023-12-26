@@ -17,7 +17,7 @@ from QA_Vietnamese.QA.module_link import extractEntVariants
 
 #w2v = KeyedVectors.load('resources/word2vec-200')
 
-stopwords = open('resources/stopwords_small.txt').read().split('\n')
+stopwords = open('/kaggle/input/ggsearch/stopwords_small.txt').read().split('\n')
 stopwords = set([w.replace(' ','_') for w in stopwords])
 punct_set = set([c for c in string.punctuation]) | set(['“','”',"...","–","…","..","•",'“','”'])
 

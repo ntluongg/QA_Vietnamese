@@ -1,10 +1,11 @@
 from __future__ import absolute_import, division, print_function
 
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,TensorDataset)
-from pytorch_pretrained_bert.modeling import BertForQuestionAnswering
-from pytorch_pretrained_bert.tokenization import (BasicTokenizer,BertTokenizer,whitespace_tokenize)
-from utils import *
+from transformers import BertPreTrainedModel, BertModel
+from transformers import AutoTokenizer,AdamW,BertForQuestionAnswering
+from module_utils import *
 from multiprocessing import Process, Pool
+import logging
 
 class Args:
     bert_model = './resources'
@@ -32,8 +33,8 @@ class Reader():
     def __init__(self):
         self.log = {}
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.tokenizer = BertTokenizer.from_pretrained(args.bert_model, do_lower_case=args.do_lower_case)
-        self.model = BertForQuestionAnswering.from_pretrained(args.bert_model)
+        self.tokenizer = AutoTokenizer.from_pretrained("/kaggle/working/final_bert", do_lower_case= True)
+        self.model = BertForQuestionAnswering.from_pretrained('/kaggle/working/final_bert')
         self.model.to(self.device)
         self.model.eval()
         self.args = args
@@ -50,5 +51,5 @@ class Reader():
             del question, paragraphs
             return predictions
         except:
-            logger.info(sys.exc_info())
+            logging.info(sys.exc_info())
             return []
