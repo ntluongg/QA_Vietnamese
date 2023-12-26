@@ -76,10 +76,17 @@ def getContent(url):
 class GoogleSearch():
     __instance = None
     
+    @staticmethod 
+    def getInstance():
+        """ Static access method. """
+        if GoogleSearch.__instance == None:
+            GoogleSearch()
+        return GoogleSearch.__instance
+
     def __init__(self):
-        
+        """ Virtually private constructor. """
         if GoogleSearch.__instance != None:
-            return GoogleSearch.__instance
+            raise Exception("This class is a singleton!")
         else:
             self.pool = Pool(4)
             GoogleSearch.__instance = self
