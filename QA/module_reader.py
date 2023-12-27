@@ -37,19 +37,17 @@ class Reader():
         self.args = args
     
     def getPredictions(self,questions, contexts):
-        questions   = questions.replace('_',' ')
+        question   = question.replace('_',' ')
         contexts = [p.replace('_',' ') for p in contexts]
         
-        # Ensure that the number of contexts and questions are the same
-        assert len(contexts) == len(questions)
 
         # Initialize a list to store the confidence scores and answers
         confidence_scores_and_answers = []
 
-        # Loop over the list of contexts and questions
+        # Loop over the list of contexts
         for context in contexts:
             # Encode the context and question
-            inputs = self.tokenizer.encode_plus(questions[0], context, return_tensors='pt')
+            inputs = self.tokenizer.encode_plus(question, context, return_tensors='pt')
 
             # Get the model's predictions
             answer_start_scores, answer_end_scores = self.model(**inputs)
