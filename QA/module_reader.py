@@ -50,11 +50,11 @@ class Reader():
             inputs = self.tokenizer.encode_plus(question, context, return_tensors='pt')
 
             # Get the model's predictions
-            answer_start_scores, answer_end_scores = self.model(**inputs)
+            output = self.model(**inputs)
 
             # Apply softmax function to convert logits to probabilities
-            start_probs = F.softmax(answer_start_scores, dim=-1)
-            end_probs = F.softmax(answer_end_scores, dim=-1)
+            start_probs = F.softmax(output[0], dim=-1)
+            end_probs = F.softmax(output[1], dim=-1)
 
             # Get the start and end positions with the highest probability
             answer_start = torch.argmax(start_probs)
