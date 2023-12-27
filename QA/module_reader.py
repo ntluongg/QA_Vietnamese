@@ -1,11 +1,11 @@
 from __future__ import absolute_import, division, print_function
 
 from transformers import AutoTokenizer, BertForQuestionAnswering
-from QA_Vietnamese.QA.module_utils import *
 from multiprocessing import Process, Pool
 import torch
 import logging
 import sys
+import torch.nn.functional as F
 
 class Args:
     bert_model = './resources'
@@ -39,14 +39,35 @@ class Reader():
         self.model.eval()
         self.args = args
     
-    def getPredictions(self,question,paragraphs):
+    def getPredictions(self,questions, contexts):
         question   = question.replace('_',' ')
         paragraphs = [p.replace('_',' ') for p in paragraphs]
         
-        predictions = predict(question,paragraphs,self.model,self.tokenizer,self.device,self.args)
-        predictions = [list(p.values()) for p in predictions]
-        predictions = [[str(i) for i in p] for p in predictions]
-        predictions = [i[:2] for i in predictions]
-        del question, paragraphs
-        return predictions
-        
+        # Ensure that the number of contexts and questions are the same
+        assert len(contexts) == len(questions)
+
+        # Loop over the list of contexts and questions
+        for context, question in zip(contexts, questions):
+            # Encode the context and question
+            inputs = self.tokenizer.encode_plus(question, context, return_tensors='pt')
+
+            # Get the model's predictions
+            answer_start_scores, answer_end_scores = self.model(**inputs)
+
+            # Apply softmax function to convert logits to probabilities
+            start_probs = F.softmax(answer_start_scores, dim=-1)
+            end_probs = F.softmax(answer_end_scores, dim=-1)
+
+            # Get the start and end positions with the highest probability
+            answer_start = torch.argmax(start_probs)
+            answer_end = torch.argmax(end_probs) + 1
+
+            # Get the confidence scores for the start and end positions
+            start_confidence = start_probs[0][answer_start].item()
+            end_confidence = end_probs[0][answer_end].item()
+
+            # Print the start and end positions and their confidence scores
+            print(f"Question: {question}")
+            print(f"Context: {context}")
+            print(f"Start position: {answer_start}, confidence score: {start_confidence}")
+            print(f"End position: {answer_end}, confidence score: {end_confidence}\n")
