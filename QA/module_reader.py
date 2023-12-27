@@ -25,9 +25,6 @@ class Args:
     
 args=Args()
 
-random.seed(args.seed)
-np.random.seed(args.seed)
-torch.manual_seed(args.seed)
 
 class Reader():
     def __init__(self, model):
@@ -71,3 +68,4 @@ class Reader():
             print(f"Context: {context}")
             print(f"Start position: {answer_start}, confidence score: {start_confidence}")
             print(f"End position: {answer_end}, confidence score: {end_confidence}\n")
+            print(f"Answer: {context[answer_start: answer_end+1]}")
