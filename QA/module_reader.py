@@ -41,16 +41,13 @@ class Reader():
         self.args = args
     
     def getPredictions(self,question,paragraphs):
-        try:
-            question   = question.replace('_',' ')
-            paragraphs = [p.replace('_',' ') for p in paragraphs]
-            
-            predictions = predict(question,paragraphs,self.model,self.tokenizer,self.device,self.args)
-            predictions = [list(p.values()) for p in predictions]
-            predictions = [[str(i) for i in p] for p in predictions]
-            predictions = [i[:2] for i in predictions]
-            del question, paragraphs
-            return predictions
-        except:
-            logging.info(sys.exc_info())
-            return []
+        question   = question.replace('_',' ')
+        paragraphs = [p.replace('_',' ') for p in paragraphs]
+        
+        predictions = predict(question,paragraphs,self.model,self.tokenizer,self.device,self.args)
+        predictions = [list(p.values()) for p in predictions]
+        predictions = [[str(i) for i in p] for p in predictions]
+        predictions = [i[:2] for i in predictions]
+        del question, paragraphs
+        return predictions
+        
