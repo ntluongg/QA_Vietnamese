@@ -1,10 +1,9 @@
 from __future__ import absolute_import, division, print_function
 
-from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,TensorDataset)
-from transformers import BertPreTrainedModel, BertModel
-from transformers import AutoTokenizer,AdamW,BertForQuestionAnswering
+from transformers import AutoTokenizer, BertForQuestionAnswering
 from QA_Vietnamese.QA.module_utils import *
 from multiprocessing import Process, Pool
+import torch
 import logging
 import sys
 
@@ -31,11 +30,11 @@ np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 
 class Reader():
-    def __init__(self):
+    def __init__(self, model):
         self.log = {}
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained("/kaggle/working/final_bert", do_lower_case= True)
-        self.model = BertForQuestionAnswering.from_pretrained('/kaggle/working/final_bert')
+        self.model = model
         self.model.to(self.device)
         self.model.eval()
         self.args = args
