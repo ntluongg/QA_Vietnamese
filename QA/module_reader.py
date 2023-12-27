@@ -36,7 +36,7 @@ class Reader():
         self.model.eval()
         self.args = args
     
-    def getPredictions(self,questions, contexts):
+    def getPredictions(self,question, contexts):
         question   = question.replace('_',' ')
         contexts = [p.replace('_',' ') for p in contexts]
         
