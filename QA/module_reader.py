@@ -37,8 +37,8 @@ class Reader():
         self.args = args
     
     def getPredictions(self,questions, contexts):
-        question   = questions.replace('_',' ')
-        context = [p.replace('_',' ') for p in context]
+        questions   = questions.replace('_',' ')
+        contexts = [p.replace('_',' ') for p in contexts]
         
         # Ensure that the number of contexts and questions are the same
         assert len(contexts) == len(questions)
