@@ -1,8 +1,9 @@
-pytorch-pretrained-bert==0.4.0
-underthesea==1.1.16
+pytorch-pretrained-bert
+underthesea
 timeout-decorator
 beautifulsoup4
-google-api-python-client==1.7.11
+google-api-python-client
 nltk
 uuid
 tqdm
+gdown
