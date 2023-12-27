@@ -37,16 +37,19 @@ class Reader():
         self.args = args
     
     def getPredictions(self,questions, contexts):
-        question   = question.replace('_',' ')
-        paragraphs = [p.replace('_',' ') for p in paragraphs]
+        question   = questions.replace('_',' ')
+        context = [p.replace('_',' ') for p in context]
         
         # Ensure that the number of contexts and questions are the same
         assert len(contexts) == len(questions)
 
+        # Initialize a list to store the confidence scores and answers
+        confidence_scores_and_answers = []
+
         # Loop over the list of contexts and questions
-        for context, question in zip(contexts, questions):
+        for context in contexts:
             # Encode the context and question
-            inputs = self.tokenizer.encode_plus(question, context, return_tensors='pt')
+            inputs = self.tokenizer.encode_plus(questions[0], context, return_tensors='pt')
 
             # Get the model's predictions
             answer_start_scores, answer_end_scores = self.model(**inputs)
@@ -63,9 +66,18 @@ class Reader():
             start_confidence = start_probs[0][answer_start].item()
             end_confidence = end_probs[0][answer_end].item()
 
-            # Print the start and end positions and their confidence scores
-            print(f"Question: {question}")
-            print(f"Context: {context}")
-            print(f"Start position: {answer_start}, confidence score: {start_confidence}")
-            print(f"End position: {answer_end}, confidence score: {end_confidence}\n")
-            print(f"Answer: {context[answer_start: answer_end+1]}")
+            # Decode the answer
+            answer = self.tokenizer.convert_tokens_to_string(self.tokenizer.convert_ids_to_tokens(inputs["input_ids"][0][answer_start:answer_end]))
+
+            # Store the confidence score and answer in the list
+            confidence_scores_and_answers.append((start_confidence * end_confidence, answer))
+
+        # Sort the list in descending order of confidence score
+        confidence_scores_and_answers.sort(key=lambda x: x[0], reverse=True)
+
+        # Get the top 5 confidence scores and answers
+        top_5_confidence_scores_and_answers = confidence_scores_and_answers[:5]
+
+        # Print the top 5 confidence scores and answers
+        for score, answer in top_5_confidence_scores_and_answers:
+            print(f"Answer: {answer}, Confidence score: {score}\n")
