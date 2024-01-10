@@ -9,5 +9,5 @@ First you need to use Kaggle notebook with GPU enabled.
 !pip install reqirements
 ```
 # For demo and checking result:
-demo: https://www.kaggle.com/code/imnotluong/q-ans/notebook
+demo and dataset : [https://www.kaggle.com/code/imnotluong/q-ans/notebook](https://www.kaggle.com/ngcnguynqu/infer-dl)
 evaluate: https://www.kaggle.com/code/imnotluong/evaluate/notebook
