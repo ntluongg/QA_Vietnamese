@@ -6,4 +6,5 @@ google-api-python-client
 nltk
 uuid
 tqdm
+cdlib
 gdown
